@@ -1,38 +1,19 @@
-//const btn = document.querySelector(".btn");
-// btn.addEventListener("mouseover", (e) => {
-//   e.preventDefault();
-//   document.querySelector("#my-form").style.background="magenta";
-//   document.querySelector("body").classList.add("bg-dark");
-//   document.querySelector(".items").lastElementChild.innerHTML = "<h1>Submitted</h1>";
- 
+// Examine the document object
+// console.dir(document);
+// console.log(document.title);
+// document.title = "AmyDeveloper";
+// console.log(document.doctype);
+// console.log(document.body);
+// console.log(document.all[14]);
+// //document.all[10].textContent="Hello";
+// console.log(document.forms);
+// console.log(document.links);
 
-// });
-
-// btn.addEventListener("click", (e) => {
-//   e.preventDefault();
-//   document.querySelector("#my-form").style.background="purple";
-//   document.querySelector("body").classList.add("bg-dark");
-// });
-
-const myForm = document.querySelector("#my-form");
-const nameInput = document.querySelector("#name");
-const emailInput = document.querySelector("#email");
-const msg = document.querySelector(".msg");
-const userList = document.querySelector("#users");
-
-myForm.addEventListener("submit", onSubmit);
-
-function onSubmit(e) {
-  e.preventDefault();
-  if (nameInput.value === "" || emailInput.value === "") {
-    msg.classList.add("error");  
-    msg.innerHTML = "Please enter all fields";
-    setTimeout(() => msg.remove(), 3000);
-  } else {
-    const li = document.createElement("li");
-    li.appendChild(document.createTextNode(`${nameInput.value} : ${emailInput.value}`));
-    userList.appendChild(li); 
-    nameInput.value ="";
-    emailInput.value= "";
-  }
-}
+var headerTitle = document.getElementById("header-title");
+console.log(headerTitle);
+//headerTitle.textContent = "Hello";
+headerTitle.innerText = "Lunch is ready";
+headerTitle.style.borderBottom = "solid 5px black";
+const cFont = document.querySelector(".title");
+cFont.style.color = "green";
+cFont.style.fontWeight= "bold";
