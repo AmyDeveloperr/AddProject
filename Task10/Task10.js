@@ -31,13 +31,9 @@ function onSubmit(e) {
 
         let seri = JSON.stringify(userDetails);
 
-        //storing data in local storage
-        localStorage.setItem("userDetails", seri);
-        
-
-        let deseri = JSON.parse(localStorage.getItem("userDetails"));
-        console.log(deseri);
-
+        //storing all input data in local storage
+        localStorage.setItem(userDetails.Email , seri);
+       
         // localStorage.getItem("userDetails", deseri);
 
         // localStorage.setItem("Email", seri);
