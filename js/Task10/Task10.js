@@ -30,7 +30,7 @@ function onSubmit(e) {
        nameInput.value = "";
        emailInput.value = ""; 
 
-       axios.post("https://crudcrud.com/api/9fb9b97a259a4e288bc91fae4c12a7d5/appointmentData", userDetails)
+       axios.post("https://crudcrud.com/api/1b23e0d0b13549e9b278e5f446b07d98/appointmentData", userDetails)
        .then((response) => {
         showUsersOnScreen(response.data);
         //console.log(response)
@@ -53,7 +53,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 //     const stringifiedDetails = localStorage.getItem(key);
 //     const details = JSON.parse(stringifiedDetails);
-    axios.get("https://crudcrud.com/api/9fb9b97a259a4e288bc91fae4c12a7d5/appointmentData")
+    axios.get("https://crudcrud.com/api/1b23e0d0b13549e9b278e5f446b07d98/appointmentData")
     .then((response) => {
         console.log(response);
         for (var i = 0; i < response.data.length; i++) {
@@ -72,28 +72,27 @@ function showUsersOnScreen(user) {
     //     removeUserFromScreen(user.Email);
     // }
 const parentNode=document.getElementById("users");
-const childHTML=`<li id=${user._id}> ${user.Name} : ${user.Email} 
+const childHTML=`<li id=${user._id}>${user.Name}:${user.Email} 
 <button onclick=deleteUser("${user._id}")> Delete User </button> 
-<button onclick=editDetails("${user._id}","${user.Name}")>Edit Details </button>
+<button onclick=editDetails("${user.Email}","${user.Name}","${user._id}")> Edit Details </button>
 </li>`;
 parentNode.innerHTML = parentNode.innerHTML + childHTML;
 }
 
 //Edit user details
 
-function editDetails(email,name) {
-
-
-    document.getElementById("email").value = email;
-    document.getElementById("name").value = name;
-    deleteUser(email);
+function editDetails(name,email,userId) {
+    
+        document.getElementById("email").value = email;
+        document.getElementById("name").value = name;
+        deleteUser(userId);
 }
 
 //Delete user
 
 function deleteUser(userId) {
 
-    axios.delete(`https://crudcrud.com/api/9fb9b97a259a4e288bc91fae4c12a7d5/appointmentData/${userId}`)
+    axios.delete(`https://crudcrud.com/api/1b23e0d0b13549e9b278e5f446b07d98/appointmentData/${userId}`)
     .then((response) => {
         removeUserFromScreen(userId);
      //showUsersOnScreen(response.data);
