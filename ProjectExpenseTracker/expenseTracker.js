@@ -25,25 +25,49 @@ function onClick(e) {
         description.value="";
         category.value="";
 
-        //Representing objects as string: Serialization
+        
+       axios.post("https://crudcrud.com/api/1b23e0d0b13549e9b278e5f446b07d98/expenseData", expenseDetails)
+       .then((response) => {
+        console.log(response);
+        showDetailsOnScreen(response.data);
+        //console.log(response)
+    })
+       .catch((err) => console.log(err))
 
-        let seri = JSON.stringify(expenseDetails);
 
-        //storing input data in local storage
+        // //Representing objects as string: Serialization
 
-        localStorage.setItem(expenseDetails.expenseAmount, seri);
-        showDetailsOnScreen(expenseDetails);
+        // let seri = JSON.stringify(expenseDetails);
+
+        // //storing input data in local storage
+
+        // localStorage.setItem(expenseDetails.expenseAmount, seri);
+        // showDetailsOnScreen(expenseDetails);
     }
 
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-    Object.keys(localStorage).forEach((key) => {
+
+    axios.get("https://crudcrud.com/api/1b23e0d0b13549e9b278e5f446b07d98/expenseData")
+    .then((response) => {
+        console.log(response);
+        for (var i = 0; i < response.data.length; i++) {
+            showDetailsOnScreen(response.data[i]);
+        }
     
-        const stringifiedDetails = localStorage.getItem(key);
-        const details = JSON.parse(stringifiedDetails);
-        showDetailsOnScreen(details);
+    //console.log(response)
     })
+    .catch((err) => console.log(err))
+    //})
+
+
+    // Object.keys(localStorage).forEach((key) => {
+    
+    //     const stringifiedDetails = localStorage.getItem(key);
+    //     const details = JSON.parse(stringifiedDetails);
+    //     showDetailsOnScreen(details);
+    // })
     
     })
 
@@ -54,35 +78,46 @@ function showDetailsOnScreen(expense) {
     
     const parentNode = document.getElementById("listDetails");
 
-    const childHTML = `<li id=${expense.expenseAmount}>${expense.expenseAmount} : ${expense.expenseCategory}
+    const childHTML = `<li id=${expense._id}>${expense.expenseAmount} : ${expense.expenseCategory}
     : ${expense.expenseDescription}
 
-    <button onclick=deleteUser("${expense.expenseAmount}")> Delete User </button>
-    <button onclick=editDetails("${expense.expenseAmount}","${expense.expenseCategory}","${expense.expenseDescription}")>
+    <button onclick=deleteUser("${expense._id}")> Delete User </button>
+    <button onclick=editDetails("${expense.expenseAmount}","${expense.expenseCategory}","${expense.expenseDescription}","${expense._id}")>
     Edit Details</button> </li>`;
     parentNode.innerHTML = parentNode.innerHTML + childHTML;
 }
 
 // Edit user details
 
-function editDetails(amount,category,description) {
+function editDetails(amount,category,description,userId) {
     document.getElementById("amount").value = amount;
     document.getElementById("category").value = category;
     document.getElementById("desc").value = description;
-    deleteUser(amount);
+    deleteUser(userId);
 }
 
 // Delete User
 
-function deleteUser(amount) {
-    localStorage.removeItem(amount);
-    removeUserFromScreen(amount);
+function deleteUser(userId) {
+
+    axios.delete(`https://crudcrud.com/api/1b23e0d0b13549e9b278e5f446b07d98/expenseData/${userId}`)
+    .then((response) => {
+        removeUserFromScreen(userId);
+     //showUsersOnScreen(response.data);
+     //console.log(response)
+ })
+    .catch((err) => console.log(err))
+
+
+
+    //localStorage.removeItem(amount);
+    //removeUserFromScreen(amount);
 }
 
 // Remove user from screen
-function removeUserFromScreen(amount) {
+function removeUserFromScreen(userId) {
 const parentNode = document.getElementById("listDetails");
-const deleteChild = document.getElementById(amount);
+const deleteChild = document.getElementById(userId);
 if(deleteChild) {
     parentNode.removeChild(deleteChild);
  }
