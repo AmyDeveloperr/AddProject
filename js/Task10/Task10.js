@@ -53,8 +53,17 @@ window.addEventListener("DOMContentLoaded", () => {
 
 //     const stringifiedDetails = localStorage.getItem(key);
 //     const details = JSON.parse(stringifiedDetails);
-    showUsersOnScreen(response.data);
-//})
+    axios.get("https://crudcrud.com/api/9fb9b97a259a4e288bc91fae4c12a7d5/appointmentData")
+    .then((response) => {
+        console.log(response);
+        for (var i = 0; i < response.data.length; i++) {
+            showUsersOnScreen(response.data[i]);
+        }
+    
+    //console.log(response)
+    })
+    .catch((err) => console.log(err))
+    //})
 
 })
 
