@@ -5,6 +5,66 @@ const itemList = document.getElementById("items");
 
 const textBox = document.getElementById("item");
 
+const filter = document.getElementById("filter");
+
+//const subButton = document.getElementById("submit");
+
+
+
+
+// inserting description text box
+const desc = document.createElement("input");
+
+
+
+
+desc.setAttribute("type", "text");
+
+desc.id = "description";
+
+desc.className = "form-control mr-2";
+
+form.appendChild(desc);
+
+form.insertBefore(desc, form.children[1]);
+
+
+
+const textBox2 = document.getElementById("description");
+
+
+
+
+//filter event
+
+filter.addEventListener("keyup", filterItems);
+
+function filterItems(e) {
+    //convert into lowercase
+
+    const text = e.target.value.toLowerCase();
+
+    //getting all li in list
+    
+   const items =  itemList.getElementsByTagName("li");
+
+    //convert HTML collection to Array
+
+   Array.from(items).forEach(function(item){
+
+    const itemName = item.firstChild.textContent;
+    const itemName2 = item.childNodes[1].textContent;
+
+            if (itemName.toLowerCase().indexOf(text) !== -1 || itemName2.toLowerCase().indexOf(text) !== -1) {
+
+                item.style.display = "block";
+            
+            } else {
+                item.style.display = "none";
+            }
+    })
+}
+
 // Form Submit Event
 
 form.addEventListener("submit", addItem);
@@ -16,11 +76,13 @@ itemList.addEventListener("click", editItem);
 function editItem(e) {
     if(e.target.classList.contains("edit")) {
         const li = e.target.parentElement;
-        const editText = li.firstChild.textContent;
-        itemList.removeChild(li);
-        textBox.value = editText;
-       
 
+            const editText = li.firstChild.textContent;
+            const editText2 = li.childNodes[1].textContent;
+            itemList.removeChild(li);
+            textBox.value = editText;
+            textBox2.value = editText2;
+       
     }
 }
 
@@ -39,7 +101,9 @@ function addItem(e) {
     
     //Get input value
 
-    newItem = document.getElementById("item");
+    const newItem = document.getElementById("item");
+
+    const newBox = document.getElementById("description");
 
     
 
@@ -51,11 +115,16 @@ function addItem(e) {
 
     // Add text node with input value
 
-    li.appendChild(document.createTextNode(newItem.value));
+   li.appendChild(document.createTextNode(newItem.value + " "));
+
+   itemList.appendChild(li);
+   
+   li.appendChild(document.createTextNode(newBox.value));
+    
 
    
     newItem.value="";
-
+    newBox.value="";
 
     // create delete button element
 
@@ -69,7 +138,7 @@ function addItem(e) {
 
     li.appendChild(delButton);
 
-    itemList.appendChild(li);
+    
 
      // Adding Edit button
 
