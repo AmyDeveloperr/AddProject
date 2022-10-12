@@ -4,33 +4,51 @@ const arr = [
     {cart: "checkout from the cart", createdAt: new Date().getSeconds()}
 ]
 
+let intervalId;
+
 function cart() {
-    setTimeout(() => {
+
+    clearInterval(intervalId);
+   
+    setInterval(() => {
+        let output = '';
         for (let i = 0; i < arr.length; i++) {
-            console.log(`${arr[i].cart} - created ${new Date().getSeconds() - arr[i].createdAt} seconds ago`);
+           output += `<li>${arr[i].cart} - created ${new Date().getSeconds() - arr[i].createdAt} seconds ago </li>`;
         }
+        document.body.innerHTML = output;
     },1000)
 }
 
 
-function emptyCart(item) {
+function emptyCart(item, callback) {
     setTimeout(() => {
         arr.push({...item, createdAt: new Date().getSeconds()});
-        //callback();
+        callback();
     },2000)
 }
 
-function signOut(out, callback) {
+function signOut(item, callback) {
     setTimeout(() => {
-        arr.push({...out, createdAt: new Date().getSeconds()});
+        arr.push({...item, createdAt: new Date().getSeconds()});
         callback();
     },3000)
 }
 
-emptyCart({cart: "empty the cart"});
+emptyCart({cart: "empty the cart"}, cart);
 signOut({cart:"signout from website"},cart);
+//lastEditedSecondsAgo();
 
+var timer;
+var count = 0;
 
+function lastEditedSecondsAgo() {
+    count = 0;
+    clearInterval(timer);
+    timer = setInterval(() => {
+        count++;
+        console.log(count);
+    }, 5000)
+}
 
 
 
